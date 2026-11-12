@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#0b1220" />
+  <meta name="description" content="NovaCalc PRO: calculadora estándar elegante, precisa y con historial privado." />
+  <title>NovaCalc PRO | Calculadora estándar</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="script.js" defer></script>
+</head>
+<body data-theme="dark">
+  <div class="ambient ambient-one" aria-hidden="true"></div>
+  <div class="ambient ambient-two" aria-hidden="true"></div>
+
+  <div class="app-shell">
+    <header class="topbar">
+      <div class="brand" aria-label="NovaCalc PRO">
+        <span class="brand-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="5" y="3" width="14" height="18" rx="3" />
+            <path d="M8.5 7.5h7M8.5 12h2m3 0h2m-7 4h2m3 0h2" />
+          </svg>
+        </span>
+        <span class="brand-name">NovaCalc <strong>PRO</strong><small>CALCULADORA ESTÁNDAR</small></span>
+      </div>
+      <nav class="top-actions" aria-label="Opciones de la calculadora">
+        <button class="icon-button theme-button" type="button" id="theme-toggle" aria-label="Cambiar a tema claro" title="Cambiar tema">
+          <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M20.5 13A9 9 0 0 1 11 3.5 9 9 0 1 0 20.5 13Z" />
+          </svg>
+          <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="4" />
+            <path d="M12 2v2m0 16v2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M2 12h2m16 0h2M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42" />
+          </svg>
+        </button>
+        <button class="history-toggle" type="button" id="history-toggle" aria-controls="history-panel" aria-expanded="false">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M3 12a9 9 0 1 0 3-6.7L3 8" />
+            <path d="M3 3v5h5m4-1v5l3 2" />
+          </svg>
+          <span id="history-toggle-text">Historial</span>
+          <span class="history-count" id="history-count" hidden>0</span>
+        </button>
+      </nav>
+    </header>
+
+    <main class="workspace" id="workspace">
+      <section class="calculator-card" aria-label="Calculadora NovaCalc PRO">
+        <div class="display-card">
+          <div class="display-heading">
+            <span class="eyebrow">VISTA PREVIA / OPERACIÓN ANTERIOR</span>
+            <span class="display-status" id="display-status"><span class="status-dot" aria-hidden="true"></span> Resultado provisional</span>
+          </div>
+          <p class="expression-text" id="expression-display" aria-label="Resultado provisional u operación anterior">0</p>
+          <div class="result-row">
+            <button class="copy-button" type="button" id="copy-result" aria-label="Copiar resultado" title="Copiar resultado">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <rect x="8" y="8" width="12" height="12" rx="2" />
+                <path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2" />
+              </svg>
+            </button>
+            <output class="result-text" id="result-display" aria-label="Operación que estás escribiendo o resultado confirmado" aria-live="polite" aria-atomic="true">0</output>
+          </div>
+        </div>
+
+        <div class="keypad" role="group" aria-label="Teclado de la calculadora">
+          <button class="calc-key utility-key" type="button" data-action="clear" title="Borrar todo (Supr)">AC</button>
+          <button class="calc-key utility-key" type="button" data-action="backspace" aria-label="Borrar último carácter" title="Retroceso (Backspace)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5h11a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H9L2 12l7-7Z" /><path d="m12 9 6 6m0-6-6 6" /></svg>
+          </button>
+          <button class="calc-key operation-key" type="button" data-action="percent" aria-label="Porcentaje">%</button>
+          <button class="calc-key operation-key" type="button" data-operator="/" aria-label="Dividir">÷</button>
+
+          <button class="calc-key number-key" type="button" data-digit="7">7</button>
+          <button class="calc-key number-key" type="button" data-digit="8">8</button>
+          <button class="calc-key number-key" type="button" data-digit="9">9</button>
+          <button class="calc-key operation-key" type="button" data-operator="*" aria-label="Multiplicar">×</button>
+
+          <button class="calc-key number-key" type="button" data-digit="4">4</button>
+          <button class="calc-key number-key" type="button" data-digit="5">5</button>
+          <button class="calc-key number-key" type="button" data-digit="6">6</button>
+          <button class="calc-key operation-key" type="button" data-operator="-" aria-label="Restar">−</button>
+
+          <button class="calc-key number-key" type="button" data-digit="1">1</button>
+          <button class="calc-key number-key" type="button" data-digit="2">2</button>
+          <button class="calc-key number-key" type="button" data-digit="3">3</button>
+          <button class="calc-key operation-key" type="button" data-operator="+" aria-label="Sumar">+</button>
+
+          <button class="calc-key number-key" type="button" data-action="sign" aria-label="Cambiar signo">±</button>
+          <button class="calc-key number-key" type="button" data-digit="0">0</button>
+          <button class="calc-key number-key" type="button" data-action="decimal" aria-label="Separador decimal">,</button>
+          <button class="calc-key equal-key" type="button" data-action="equals" aria-label="Calcular resultado">=</button>
+        </div>
+        <div class="keypad-footer">
+          <span class="keyboard-hint">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="5" width="20" height="14" rx="2" /><path d="M6 9h.01M10 9h.01M14 9h.01M18 9h.01M6 13h.01M10 13h.01M14 13h.01M18 13h.01M7 16h10" /></svg>
+            Compatible con teclado físico
+          </span>
+          <span class="online-label"><span aria-hidden="true">●</span> Sin conexión necesaria</span>
+        </div>
+      </section>
+
+      <aside class="history-panel" id="history-panel" aria-label="Historial de operaciones" aria-hidden="true" inert>
+        <div class="history-header">
+          <div class="history-heading">
+            <span class="history-heading-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7L3 8" /><path d="M3 3v5h5m4-1v5l3 2" /></svg>
+            </span>
+            <span><strong>Historial</strong><small>Tus operaciones recientes</small></span>
+          </div>
+          <button class="icon-button close-history" type="button" id="close-history" aria-label="Cerrar historial" title="Cerrar historial">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12" /></svg>
+          </button>
+        </div>
+        <div class="history-content" id="history-list" aria-live="polite"></div>
+        <div class="history-footer">
+          <button class="clear-history-button" id="clear-history" type="button">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18m-2 0-1 14H6L5 6m3 0V4h8v2M10 10v6m4-6v6" /></svg>
+            Limpiar historial
+          </button>
+        </div>
+      </aside>
+    </main>
+
+    <footer class="site-footer">
+      <span>NovaCalc <strong>PRO</strong></span>
+      <span class="footer-separator" aria-hidden="true">·</span>
+      <span>Simple por fuera. Potente por dentro.</span>
+    </footer>
+  </div>
+
+  <div id="history-backdrop" class="history-backdrop" aria-hidden="true"></div>
+  <div class="toast" id="toast" role="status" aria-live="polite" aria-atomic="true"></div>
+</body>
+</html>
